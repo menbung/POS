@@ -1,29 +1,40 @@
 package sw.pos;
 
 public class NameInfo {
-	private int last_num, epd_value;//ÇöÀç µ¿ÀÏ ÀÌ¸§À¸·Î »ı¼ºµÈ »óÇ° °³¼ö, À¯Åë±âÇÑ ¼³Á¤°ª
-	private String name_code;//»óÇ°ÀÌ¸§¿¡ µû¸¥ »óÇ° ÄÚµå 4ÀÚ¸®
+	private int last_num, epd_value;//í˜„ì¬ ë™ì¼ ì´ë¦„ìœ¼ë¡œ ìƒì„±ëœ ìƒí’ˆ ê°œìˆ˜, ìœ í†µê¸°í•œ ì„¤ì •ê°’
+	private String cate_code;//ìƒí’ˆì´ë¦„ì— ë”°ë¥¸ ì¹´í…Œê³ ë¦¬ ì½”ë“œ 4ìë¦¬
 	
-	public NameInfo(String name_code, int last_num, int epd_value) {
-		this.name_code = name_code;
+	public NameInfo(String name_code, int last_num, int epd_value, int price) 
+	{
+		this.cate_code = cate_code;
 		this.last_num = last_num;
 		this.epd_value = epd_value;
+		this.price = price;
 	}
 
-	public int getLast_num() {
+	public int getLast_num() 
+	{
 		return last_num;
 	}
 
-	public void addLast_num() {
+	public void addLast_num() 
+	{
 		this.last_num++;
 	}
 
-	public int getEpd_value() {
+	public int getEpd_value() 
+	{
 		return epd_value;
 	}
 
-	public String getName_code() {
-		return name_code;
+	public String getCate_code()
+	{
+		return cate_code;
+	}
+	
+	public int getPrice()
+	{
+		return price;
 	}
 	
 }
