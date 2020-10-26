@@ -96,6 +96,7 @@ public class Manager {
 		System.out.println("4. 현금관리");
 		System.out.println("5. 매출확인");
 		System.out.println("6. 종료");
+		System.out.println("\n메뉴 선택: ");
 		int select = scan.nextInt();
 		if(isPossible(select,1,6)) {
 			switch(select) {
