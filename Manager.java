@@ -106,9 +106,9 @@ public class Manager {
 				break;
 			case 2: //2. 환불하기
 			case 3: //3. 재고관리	
-			case 4: //4. 현금관리
 				InventoryManager im = new InventoryManager();
 				break;
+			case 4: //4. 현금관리
 			case 5: //5. 매출확인	
 			case 6: //6. 종료
 				con = false;
