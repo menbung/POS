@@ -86,7 +86,7 @@ public class Manager {
 		}
 	}
 	
-	public void start(Db db) {
+	public void start(Db db) throws InterruptedException, IOException{
 		boolean con = true;
 		
 		while(con) {
