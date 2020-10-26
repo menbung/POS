@@ -6,25 +6,28 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Db {
-	private String last_date;//°¡Àå ÃÖ±ÙÀÇ ³¯Â¥ ÀúÀå º¯¼ö
-	private HashMap<String, ArrayList<Product>> products = new HashMap<>();//»óÇ° ÀúÀåÇÏ´Â ¸®½ºÆ®
-	private HashMap<String, CategoryInfo> categorys;//Å« Ä«Å×°í¸® ÀúÀåÇÏ´Â ¸®½ºÆ®
-	private HashMap<String, NameInfo> names;//»óÇ°Á¾·ù(»óÇ°ÀÌ¸§) ÀúÀåÇÏ´Â ¸®½ºÆ®
-	private HashMap<Integer, Integer> cash;//Çö±İº¸À¯·® ÀúÀåÇÏ´Â ¸®½ºÆ®
-	private HashMap<String, ArrayList<Product>> payments = new HashMap<>();//°áÁ¦ Á¤º¸ ÀúÀå ¸®½ºÆ®
+public class Db 
+{
+	private String last_date;//ê°€ì¥ ìµœê·¼ì˜ ë‚ ì§œ ì €ì¥ ë³€ìˆ˜
+	private HashMap<String, ArrayList<Product>> products = new HashMap<>();//ìƒí’ˆ ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
+	private HashMap<String, CategoryInfo> categorys;//í° ì¹´í…Œê³ ë¦¬ ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
+	private HashMap<String, NameInfo> names;//ìƒí’ˆì¢…ë¥˜(ìƒí’ˆì´ë¦„) ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
+	private HashMap<Integer, Integer> cash;//í˜„ê¸ˆë³´ìœ ëŸ‰ ì €ì¥í•˜ëŠ” ë¦¬ìŠ¤íŠ¸
+	private HashMap<String, ArrayList<Product>> payments = new HashMap<>();//ê²°ì œ ì •ë³´ ì €ì¥ ë¦¬ìŠ¤íŠ¸
 	
-	private FileIO fileio;//ÆÄÀÏ ÀÔÃâ·Â Å¬·¡½º
+	private FileIO fileio;//íŒŒì¼ ì…ì¶œë ¥ í´ë˜ìŠ¤
 	
-	public Db(String date) {
+	public Db() 
+	{
 		fileio = new FileIO();
-		//¸®½ºÆ®µé ÆÄÀÏ³»¿ë ÀúÀå
-		last_date = fileio.readLastDate();//ÃÖ½Å ³¯Â¥.
+		//ë¦¬ìŠ¤íŠ¸ë“¤ íŒŒì¼ë‚´ìš© ì €ì¥
+		last_date = fileio.readLastDate();//ìµœì‹  ë‚ ì§œ.
 		categorys = fileio.readCategory();
 		names = fileio.readName();
 		cash = fileio.readCash();
 		payments = fileio.readPayment();
-		for(int i=0; i<categorys.size(); i++) {//AA¸¦ ÇÏ³ª¾¿ Áõ°¡½ÃÅ´
+		for(int i=0; i<categorys.size(); i++) //AAë¥¼ í•˜ë‚˜ì”© ì¦ê°€ì‹œí‚´
+		{
 			int num1 = (i/26)+65;
 			int num2 = (i%26)+65;
 			char ascii1 = (char)num1;
@@ -35,20 +38,23 @@ public class Db {
 			products.put(file_name, fileio.readProduct((file_name+".txt")));
 		}
 	}
-	//»óÇ° Ãß°¡ ÇÔ¼ö
-	public void addProduct(Product product) {
+	
+	//ìƒí’ˆ ì¶”ê°€ í•¨ìˆ˜
+	public void addProduct(Product product) 
+	{
 		String file_name = product.getCode().substring(0, 2);
-		if(!products.containsKey(file_name)) {
+		if(!products.containsKey(file_name)) 
+		{
 			ArrayList<Product> list = new ArrayList<Product>();
 			list.add(product);
 			products.put(file_name, list);
 		}
-		else {
+		else
 			products.get(file_name).add(product);
-		}
 		
 		ArrayList<String> contents = new ArrayList<>();
-		for(int i=0; i<products.get(file_name).size(); i++) {
+		for(int i=0; i<products.get(file_name).size(); i++) 
+		{
 			String str = products.get(file_name).get(i).getCode();
 			str+="/"+products.get(file_name).get(i).getName();
 			str+="/"+products.get(file_name).get(i).getEpdate();
@@ -57,17 +63,22 @@ public class Db {
 		}
 		fileio.writeFile((file_name+".txt"), contents);
 	}
-	//»óÇ° Á¦°Å ÇÔ¼ö
-	public void removeProduct(String code) {
+	
+	//ìƒí’ˆ ì œê±° í•¨ìˆ˜
+	public void removeProduct(String code) 
+	{
 		String file_name = code.substring(0, 2);
-		for(int i=0; i<products.get(file_name).size(); i++) {
-			if(products.get(file_name).get(i).getCode().equals(code)) {
+		for(int i=0; i<products.get(file_name).size(); i++) 
+		{
+			if(products.get(file_name).get(i).getCode().equals(code)) 
+			{
 				products.get(file_name).remove(i);
 				break;
 			}
 		}
 		ArrayList<String> contents = new ArrayList<>();
-		for(int i=0; i<products.get(file_name).size(); i++) {
+		for(int i=0; i<products.get(file_name).size(); i++)
+		{
 			String str = products.get(file_name).get(i).getCode();
 			str+="/"+products.get(file_name).get(i).getName();
 			str+="/"+products.get(file_name).get(i).getEpdate();
@@ -76,29 +87,35 @@ public class Db {
 		}
 		fileio.writeFile((file_name+".txt"), contents);
 	}
-	//»óÇ°Á¾·ù(»óÇ°ÀÌ¸§) º¯°æ ÇÔ¼ö
-	public void addNames(String name) {
+	
+	//ìƒí’ˆì¢…ë¥˜(ìƒí’ˆì´ë¦„) ë³€ê²½ í•¨ìˆ˜
+	public void addNames(String name) 
+	{
 		names.get(name).addLast_num();
 		Set<String> set = names.keySet();
 		Iterator<String> it = set.iterator();
 		ArrayList<String> contents = new ArrayList<>();
 		String key;
-		for(int i=0; i<names.size(); i++) {
+		for(int i=0; i<names.size(); i++)
+		{
 			key = it.next();
-			String str = key + "/" + names.get(key).getName_code() + "/" + names.get(key).getLast_num();
-			str += "/" + names.get(key).getEpd_value()+"\n";
+			String str = key + "/" + names.get(key).getCate_code() + "/" + names.get(key).getLast_num() + "/" + names.get(key).getEpd_value() + "/" + names.get(key).getPrice()+ "\n";
 			contents.add(str);
 		}
 		fileio.writeFile("PName.txt", contents);
 	}
-	//»óÇ°Á¾·ù(»óÇ°ÀÌ¸§) Ãß°¡ ÇÔ¼ö
-	public void addNames(String name, String code, int epd_value) {
-		names.put(name, new NameInfo(code, 1, epd_value));
-		String contents = name+"/"+code+"/1/"+epd_value;
+	
+	//ìƒí’ˆì¢…ë¥˜(ìƒí’ˆì´ë¦„) ì¶”ê°€ í•¨ìˆ˜
+	public void addNames(String name, String code, int epd_value, int price)
+	{
+		names.put(name, new NameInfo(code, 0, epd_value, price));
+		String contents = name+"/"+code+"/0/"+epd_value+"/"+price;
 		fileio.writeFile("PName.txt", contents);
 	}
-	//Çö±İ ÀÜ·® º¯°æ ÇÔ¼ö 
-	public void setCash(int unit, int count, boolean isNegative) {
+	
+	//í˜„ê¸ˆ ì”ëŸ‰ ë³€ê²½ í•¨ìˆ˜ 
+	public void setCash(int unit, int count, boolean isNegative) 
+	{
 		int num = cash.get(unit);
 		cash.remove(unit);
 		if(isNegative)
@@ -116,31 +133,39 @@ public class Db {
 		contents.add("10:"+cash.get(10)+"\n");
 		fileio.writeFile("Cash.txt", contents);
 	}
-	//Å« Ä«Å×°í¸® º¯°æ ÇÔ¼ö
-	public void addCategory(String cate) {
+	
+	//í° ì¹´í…Œê³ ë¦¬ ë³€ê²½ í•¨ìˆ˜
+	public void addCategory(String cate) 
+	{
 		categorys.get(cate).addLast_num();
 		Set<String> set = categorys.keySet();
 		Iterator<String> it = set.iterator();
 		ArrayList<String> contents = new ArrayList<>();
 		String key;
-		for(int i=0; i<categorys.size(); i++) {
+		for(int i=0; i<categorys.size(); i++) 
+		{
 			key = it.next();
 			String str = key + "/" + categorys.get(key).getCategory_code() + "/" + categorys.get(key).getLast_num() + "\n";
 			contents.add(str);
 		}
 		fileio.writeFile("Category.txt", contents);
 	}
-	//Å« Ä«Å×°í¸® Ãß°¡ ÇÔ¼ö
-	public void addCategory(String cate, String code) {
-		categorys.put(cate, new CategoryInfo(code, 1));
-		String contents = cate+"/"+code+"/1";
+	
+	//í° ì¹´í…Œê³ ë¦¬ ì¶”ê°€ í•¨ìˆ˜
+	public void addCategory(String cate, String code) 
+	{
+		categorys.put(cate, new CategoryInfo(code, 0));
+		String contents = cate+"/"+code+"/0";
 		fileio.writeFile("Category.txt", contents);
 	}
-	//°áÁ¦ ±â·Ï Ãß°¡ ÇÔ¼ö
-	public void addPayment(String code, ArrayList<Product> list) {
+	
+	//ê²°ì œ ê¸°ë¡ ì¶”ê°€ í•¨ìˆ˜
+	public void addPayment(String code, ArrayList<Product> list) 
+	{
 		payments.put(code, list);
 		String str = code+"\n";
-		for(int i=0; i<list.size(); i++) {
+		for(int i=0; i<list.size(); i++) 
+		{
 			str+= list.get(i).getCode();
 			str+="/"+list.get(i).getName();
 			str+="/"+list.get(i).getEpdate();
@@ -149,12 +174,16 @@ public class Db {
 		str+="@\n";
 		fileio.writeFile("PaymentList.txt", str);
 	}
-	//°áÁ¦ÇÑ »óÇ° »èÁ¦ ±â´É
-	public void removePayment(String pay_code, String pro_code) {
-		for(int i=0; i<payments.get(pay_code).size(); i++) {
-			if(payments.get(pay_code).get(i).getCode().equals(pro_code)) {
+	//ê²°ì œí•œ ìƒí’ˆ ì‚­ì œ ê¸°ëŠ¥
+	public void removePayment(String pay_code, String pro_code) 
+	{
+		for(int i=0; i<payments.get(pay_code).size(); i++) 
+		{
+			if(payments.get(pay_code).get(i).getCode().equals(pro_code)) 
+			{
 				payments.get(pay_code).remove(i);
-				if(payments.get(pay_code).isEmpty()) {
+				if(payments.get(pay_code).isEmpty()) 
+				{
 					payments.remove(pay_code);
 				}
 				break;
@@ -165,10 +194,12 @@ public class Db {
 		Iterator<String> it = set.iterator();
 		ArrayList<String> contents = new ArrayList<>();
 		String key;
-		for(int i=0; i<payments.size(); i++) {
+		for(int i=0; i<payments.size(); i++)
+		{
 			key = it.next();
 			String str = key+"\n";
-			for(int j=0; j<payments.get(key).size(); j++) {
+			for(int j=0; j<payments.get(key).size(); j++) 
+			{
 				str+=payments.get(key).get(j).getCode()+"/";
 				str+=payments.get(key).get(j).getName()+"/";
 				str+=payments.get(key).get(j).getEpdate()+"/";
@@ -179,30 +210,36 @@ public class Db {
 		}
 		fileio.writeFile("PaymentList.txt", contents);
 	}
-	//ÇöÀç ³¯Â¥º¸´Ù ÀÌÀü ³¯Â¥ÀÎÁö ÆÇ´Ü.
-	public String getLast_date() {
+	
+	//í˜„ì¬ ë‚ ì§œë³´ë‹¤ ì´ì „ ë‚ ì§œì¸ì§€ íŒë‹¨.
+	public String getLast_date() 
+	{
 		return last_date;
 	}
 	
-	public boolean isPossible(String date) {
+	public boolean isPossible(String date) 
+	{
 		boolean isLast_date = false;
-		//³¯Â¥´Â ¹«Á¶°Ç 20000101~20991231´Ï±î index 2ºÎÅÍ index 7±îÁö º¸¸é µÊ.
+		//ë‚ ì§œëŠ” ë¬´ì¡°ê±´ 20000101~20991231ë‹ˆê¹Œ index 2ë¶€í„° index 7ê¹Œì§€ ë³´ë©´ ë¨.
 		
-		if(isPossible(date, 2)) {
+		if(isPossible(date, 2)) 
+		{
 			isLast_date = true;
 		}
 		
 		if(isLast_date) 
 			return true;
-		else {
-			System.out.println("±âÁ¸¿¡ ÀÔ·ÂÇÑ ³¯Â¥º¸´Ù ÀÌÈÄÀÇ ³¯Â¥¸¸ ÀÔ·Â °¡´ÉÇÕ´Ï´Ù.");
-			System.out.println("´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+		else 
+		{
+			System.out.println("ê¸°ì¡´ì— ì…ë ¥í•œ ë‚ ì§œë³´ë‹¤ ì´í›„ì˜ ë‚ ì§œë§Œ ì…ë ¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+			System.out.println("ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return false;
 		}
 		
 	}
 	
-	public boolean isPossible(String date, int i) {
+	public boolean isPossible(String date, int i) 
+	{
 		if(i==8)
 			return false;
 		if(date.charAt(i)-'0' > last_date.charAt(i)-'0')
@@ -213,26 +250,31 @@ public class Db {
 			return false;
 	}
 	
-	//ÃÖ±Ù ³¯Â¥ º¯°æ ÇÔ¼ö
-	public String setLast_date(String last_date) {
+	//ìµœê·¼ ë‚ ì§œ ë³€ê²½ í•¨ìˆ˜
+	public String setLast_date(String last_date) 
+	{
 			this.last_date = last_date;
 			fileio.writeFile("Date.txt", last_date);
 			return last_date.substring(0, 4)+"_"+last_date.substring(4, 6)+"_"+last_date.substring(6);
 	}
 
-	public HashMap<String, ArrayList<Product>> getProducts() {
+	public HashMap<String, ArrayList<Product>> getProducts() 
+	{
 		return products;
 	}
 
-	public HashMap<String, CategoryInfo> getCategorys() {
+	public HashMap<String, CategoryInfo> getCategorys() 
+	{
 		return categorys;
 	}
 
-	public HashMap<String, NameInfo> getNames() {
+	public HashMap<String, NameInfo> getNames()
+	{
 		return names;
 	}
 
-	public HashMap<Integer, Integer> getCash() {
+	public HashMap<Integer, Integer> getCash() 
+	{
 		return cash;
 	}
 	
