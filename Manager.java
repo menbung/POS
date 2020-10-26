@@ -18,7 +18,7 @@ public class Manager {
 		
 		else if(isPossible(date))	
 		{
-			Db db = new Db(date);
+			Db db = new Db();
 			if(db.isPossible(date))//이전 날짜인지 확인.
 			{
 				System.out.println(db.setLast_date(date));//올바른 날짜임을 확인했으니 Date.txt에 넣고, 메인메뉴로 들어옴.
