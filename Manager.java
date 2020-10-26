@@ -1,11 +1,12 @@
 package sw.pos;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Manager {
 	Scanner scan = new Scanner(System.in);
 	String date;//날짜 입력받음.
-	public void menu() {
+	public void menu() throws InterruptedException, IOException{
 		while(true) {
 		System.out.println("종료하시려면 \"종료\"를 입력해주세요");
 		System.out.print("날짜입력 : ");
@@ -105,7 +106,8 @@ public class Manager {
 			case 2: //2. 환불하기
 			case 3: //3. 재고관리	
 			case 4: //4. 현금관리
-				
+				InventoryManager im = new InventoryManager();
+				break;
 			case 5: //5. 매출확인	
 			case 6: //6. 종료
 				con = false;
