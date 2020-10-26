@@ -4,48 +4,47 @@ import java.util.Scanner;
 
 public class Manager {
 	Scanner scan = new Scanner(System.in);
+	String date;//ë‚ ì§œ ì…ë ¥ë°›ìŒ.
 	public void menu() {
-		String date;//³¯Â¥ ÀÔ·Â¹ŞÀ½.
-		
 		while(true) {
-		System.out.println("Á¾·áÇÏ½Ã·Á¸é \"Á¾·á\"¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä");
-		System.out.print("³¯Â¥ÀÔ·Â : ");
+		System.out.println("ì¢…ë£Œí•˜ì‹œë ¤ë©´ \"ì¢…ë£Œ\"ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”");
+		System.out.print("ë‚ ì§œì…ë ¥ : ");
 		date = scan.next();
-		if(date.equals("Á¾·á")) {
-			//System.out.println("POS±â ÀÛµ¿ Á¾·á");
+		if(date.equals("ì¢…ë£Œ")) {
+			//System.out.println("POSê¸° ì‘ë™ ì¢…ë£Œ");
 			return;
 		}
 		
 		else if(isPossible(date))	
 		{
 			Db db = new Db(date);
-			if(db.isPossible(date))//ÀÌÀü ³¯Â¥ÀÎÁö È®ÀÎ.
+			if(db.isPossible(date))//ì´ì „ ë‚ ì§œì¸ì§€ í™•ì¸.
 			{
-				System.out.println(db.setLast_date(date));//¿Ã¹Ù¸¥ ³¯Â¥ÀÓÀ» È®ÀÎÇßÀ¸´Ï Date.txt¿¡ ³Ö°í, ¸ŞÀÎ¸Ş´º·Î µé¾î¿È.
-				start(db);//¸ŞÀÎ ¸Ş´º º¸¿©ÁÖ±â.
+				System.out.println(db.setLast_date(date));//ì˜¬ë°”ë¥¸ ë‚ ì§œì„ì„ í™•ì¸í–ˆìœ¼ë‹ˆ Date.txtì— ë„£ê³ , ë©”ì¸ë©”ë‰´ë¡œ ë“¤ì–´ì˜´.
+				start(db);//ë©”ì¸ ë©”ë‰´ ë³´ì—¬ì£¼ê¸°.
 			}
 		}
 		
 		}
 		
 		//Db db = new Db(date);
-		//db.addProduct(new Product("BBAAAA", "ÄÚÄ«Äİ¶ó", "20201101", "2000"));
+		//db.addProduct(new Product("BBAAAA", "ì½”ì¹´ì½œë¼", "20201101", "2000"));
 		//db.removeProduct("BBAAAA");
-		//db.addNames("Á¶¸®Æş");
-		//db.addNames("ÄÚÄ«Äİ¶ó", "BBAA", 20);
+		//db.addNames("ì¡°ë¦¬í");
+		//db.addNames("ì½”ì¹´ì½œë¼", "BBAA", 20);
 		//db.setCash(50000, 10, false);
 		//db.removePayment("201025001", "AAAAAC");
 		//System.out.println("Done");
 	}
-	//¿Ã¹Ù¸¥ ³¯Â¥ ÀÔ·ÂÀÎÁö ÆÇ´Ü. ¼ıÀÚ°¡ ¾Æ´Ñ ÀÔ·Âµµ °É·¯ÁáÀ½.
+	//ì˜¬ë°”ë¥¸ ë‚ ì§œ ì…ë ¥ì¸ì§€ íŒë‹¨. ìˆ«ìê°€ ì•„ë‹Œ ì…ë ¥ë„ ê±¸ëŸ¬ì¤¬ìŒ.
 	public boolean isPossible(String date) {
-		int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //1¿ù~12¿ù Á÷Á¢ ºñ±³.
+		int[] days = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; //1ì›”~12ì›” ì§ì ‘ ë¹„êµ.
 		int month;
 		if(date.length()<8){
-			System.out.println("ÀÔ·Â±æÀÌ°¡ 8º¸´Ù ÀÛ½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			System.out.println("ì…ë ¥ê¸¸ì´ê°€ 8ë³´ë‹¤ ì‘ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return false;
 		}else if(date.length()>8){
-			System.out.println("ÀÔ·Â±æÀÌ°¡ 8º¸´Ù Å®´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			System.out.println("ì…ë ¥ê¸¸ì´ê°€ 8ë³´ë‹¤ í½ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return false;
 		}
 		else {
@@ -71,7 +70,7 @@ public class Manager {
 			if(possible)
 				return true;
 			else {
-				System.out.println("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+				System.out.println("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 				return false;
 			}
 		}
@@ -81,7 +80,7 @@ public class Manager {
 		if(i>=begin&&i<=end)
 			return true;
 		else {
-			System.out.println("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+			System.out.println("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 			return false;
 		}
 	}
@@ -90,22 +89,22 @@ public class Manager {
 		boolean con = true;
 		
 		while(con) {
-		System.out.println("1. °áÁ¦ÇÏ±â");
-		System.out.println("2. È¯ºÒÇÏ±â");
-		System.out.println("3. Àç°í°ü¸®");
-		System.out.println("4. Çö±İ°ü¸®");
-		System.out.println("5. ¸ÅÃâÈ®ÀÎ");
-		System.out.println("6. Á¾·á");
+		System.out.println("1. ê²°ì œí•˜ê¸°");
+		System.out.println("2. í™˜ë¶ˆí•˜ê¸°");
+		System.out.println("3. ì¬ê³ ê´€ë¦¬");
+		System.out.println("4. í˜„ê¸ˆê´€ë¦¬");
+		System.out.println("5. ë§¤ì¶œí™•ì¸");
+		System.out.println("6. ì¢…ë£Œ");
 		int select = scan.nextInt();
 		if(isPossible(select,1,6)) {
 			switch(select) {
-			case 1: //1. °áÁ¦ÇÏ±â	
-			case 2: //2. È¯ºÒÇÏ±â
-			case 3: //3. Àç°í°ü¸®	
-			case 4: //4. Çö±İ°ü¸®
+			case 1: //1. ê²°ì œí•˜ê¸°	
+			case 2: //2. í™˜ë¶ˆí•˜ê¸°
+			case 3: //3. ì¬ê³ ê´€ë¦¬	
+			case 4: //4. í˜„ê¸ˆê´€ë¦¬
 				
-			case 5: //5. ¸ÅÃâÈ®ÀÎ	
-			case 6: //6. Á¾·á
+			case 5: //5. ë§¤ì¶œí™•ì¸	
+			case 6: //6. ì¢…ë£Œ
 				con = false;
 			}
 		}
