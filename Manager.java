@@ -99,6 +99,9 @@ public class Manager {
 		if(isPossible(select,1,6)) {
 			switch(select) {
 			case 1: //1. 결제하기	
+				ay pay = new Pay(db, date);
+				pay.startPay();
+				break;
 			case 2: //2. 환불하기
 			case 3: //3. 재고관리	
 			case 4: //4. 현금관리
