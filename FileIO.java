@@ -15,7 +15,7 @@ public class FileIO {
 	public FileIO() {
 		
 	}
-	//³¯Â¥ ÀúÀåÇÑ txt ÆÄÀÏ ÀĞ±â
+	//ë‚ ì§œ ì €ì¥í•œ txt íŒŒì¼ ì½ê¸°
 	public String readLastDate() {
 		String date = "";
 		try {
@@ -26,12 +26,12 @@ public class FileIO {
 			}
 			scan.close();
 		}catch(FileNotFoundException e) {
-			System.out.println("ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+			System.out.println("íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			return null;
 		}
 		return date;
 	}
-	//»óÇ°µé ÀúÀåÇÑ txt ÆÄÀÏ ÀĞ±â
+	//ìƒí’ˆë“¤ ì €ì¥í•œ txt íŒŒì¼ ì½ê¸°
 	public ArrayList<Product> readProduct(String file_name){
 		ArrayList<Product> list = new ArrayList<>();
 		try {
@@ -44,12 +44,12 @@ public class FileIO {
 			}
 			scan.close();
 		}catch(FileNotFoundException e) {
-			System.out.println("ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+			System.out.println("íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			return null;
 		}
 		return list;
 	}
-	//Å« Ä«Å×°í¸® ÀúÀåÇÑ txt ÆÄÀÏ ÀĞ±â
+	//í° ì¹´í…Œê³ ë¦¬ ì €ì¥í•œ txt íŒŒì¼ ì½ê¸°
 	public HashMap<String, CategoryInfo> readCategory(){
 		HashMap<String, CategoryInfo> cates = new HashMap<>();
 		try {
@@ -62,12 +62,12 @@ public class FileIO {
 			}
 			scan.close();
 		}catch(FileNotFoundException e) {
-			System.out.println("ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+			System.out.println("íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			return null;
 		}
 		return cates;
 	}
-	//»óÇ°Á¾·ù(»óÇ°ÀÌ¸§) ÀúÀåÇÑ txt ÆÄÀÏ ÀĞ±â
+	//ìƒí’ˆì¢…ë¥˜(ìƒí’ˆì´ë¦„) ì €ì¥í•œ txt íŒŒì¼ ì½ê¸°
 	public HashMap<String, NameInfo> readName(){
 		HashMap<String, NameInfo> names = new HashMap<>();
 		try {
@@ -82,12 +82,12 @@ public class FileIO {
 			}
 			scan.close();
 		}catch(FileNotFoundException e) {
-			System.out.println("ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+			System.out.println("íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			return null;
 		}
 		return names;
 	}
-	//Çö±İ º¸À¯·® ÀúÀåÇÑ txt ÆÄÀÏ ÀĞ±â
+	//í˜„ê¸ˆ ë³´ìœ ëŸ‰ ì €ì¥í•œ txt íŒŒì¼ ì½ê¸°
 	public HashMap<Integer, Integer> readCash(){
 		HashMap<Integer, Integer> cash = new HashMap<>();
 		try {
@@ -100,12 +100,12 @@ public class FileIO {
 			}
 			scan.close();
 		}catch(FileNotFoundException e) {
-			System.out.println("ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+			System.out.println("íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			return null;
 		}
 		return cash;
 	}
-	//°áÀç ¸®½ºÆ® ÀúÀåÇÑ txt ÆÄÀÏ ÀĞ±â
+	//ê²°ì¬ ë¦¬ìŠ¤íŠ¸ ì €ì¥í•œ txt íŒŒì¼ ì½ê¸°
 	public HashMap<String, ArrayList<Product>> readPayment() {
 		HashMap<String, ArrayList<Product>> pays = new HashMap<>();
 		try {
@@ -113,6 +113,7 @@ public class FileIO {
 			Scanner scan = new Scanner(file);
 			while(scan.hasNextLine()) {
 				ArrayList<Product> list = new ArrayList<>();
+				int i=0;
 				String str = "";
 				String code = scan.nextLine();
 				while(scan.hasNextLine()) {
@@ -121,17 +122,23 @@ public class FileIO {
 						break;
 					StringTokenizer token = new StringTokenizer(str, "/");
 					list.add(new Product(token.nextToken(), token.nextToken(), token.nextToken(), token.nextToken()));
+					if(token.nextToken().equals("1")) {
+						list.get(i).setPayByCash(true);
+					}
+					else {
+						list.get(i).setPayByCash(false);
+					}
 				}
 				pays.put(code, list);
 			}
 			scan.close();
 		}catch(FileNotFoundException e) {
-			System.out.println("ÆÄÀÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+			System.out.println("íŒŒì¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			return null;
 		}
 		return pays;
 	}
-	//ÆÄÀÏ¿¡ »õ·Î¿î °ª µ¤¾î¾²±â
+	//íŒŒì¼ì— ìƒˆë¡œìš´ ê°’ ë®ì–´ì“°ê¸°
 	public void writeFile(String file_name, ArrayList<String> contents) {
 		File file = new File(file_name);
 		FileWriter writer = null;
@@ -146,7 +153,7 @@ public class FileIO {
 			}
 			buf_writer.flush();
 		}catch(IOException e) {
-			System.out.println("ÆÄÀÏ¾²±â ¿À·ù");
+			System.out.println("íŒŒì¼ì“°ê¸° ì˜¤ë¥˜");
 		}finally {
 			try {
 				if(buf_writer != null)
@@ -154,11 +161,11 @@ public class FileIO {
 				if(writer != null)
 					writer.close();
 			}catch(IOException e) {
-				System.out.println("ÆÄÀÏ¹öÆÛ Áö¿ì±â ½ÇÆĞ");
+				System.out.println("íŒŒì¼ë²„í¼ ì§€ìš°ê¸° ì‹¤íŒ¨");
 			}
 		}
 	}
-	//ÆÄÀÏ¿¡ »õ·Î¿î °ª Ãß°¡
+	//íŒŒì¼ì— ìƒˆë¡œìš´ ê°’ ì¶”ê°€
 	public void writeFile(String file_name, String contents) {
 		File file = new File(file_name);
 		FileWriter writer = null;
@@ -170,7 +177,7 @@ public class FileIO {
 			buf_writer.write("\n");
 			buf_writer.flush();
 		}catch(IOException e) {
-			System.out.println("ÆÄÀÏ¾²±â ¿À·ù");
+			System.out.println("íŒŒì¼ì“°ê¸° ì˜¤ë¥˜");
 		}finally {
 			try {
 				if(buf_writer != null)
@@ -178,7 +185,7 @@ public class FileIO {
 				if(writer != null)
 					writer.close();
 			}catch(IOException e) {
-				System.out.println("ÆÄÀÏ¹öÆÛ Áö¿ì±â ½ÇÆĞ");
+				System.out.println("íŒŒì¼ë²„í¼ ì§€ìš°ê¸° ì‹¤íŒ¨");
 			}
 		}
 	}
